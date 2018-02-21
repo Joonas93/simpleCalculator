@@ -54,7 +54,7 @@ private JButton btnNewButton_12;
 private JButton btnNewButton_13;
 private JButton btnNewButton_14;
 private JButton btnNewButton_15;
-private String calculation;
+private String calculation = "";
 double result, tmp;
 private String doer ="";
 private String tmpDoer = "";
@@ -64,7 +64,7 @@ private JTextArea txtrSaas;
 		
 		getContentPane().setLayout(new BorderLayout(5, 5));
 		
-		JTextArea txtrSaas = new JTextArea();
+		 txtrSaas = new JTextArea();
 		txtrSaas.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtrSaas.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		txtrSaas.setColumns(3);
@@ -79,82 +79,82 @@ private JTextArea txtrSaas;
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(4, 9, 4, 4));
 		
-		JButton btnNewButton_1 = new JButton("1");
+		 btnNewButton_1 = new JButton("1");
 		btnNewButton_1.setRequestFocusEnabled(false);
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("2");
+		 btnNewButton_2 = new JButton("2");
 		btnNewButton_2.setRequestFocusEnabled(false);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_2);
 		
-		JButton btnNewButton_3 = new JButton("3");
+		 btnNewButton_3 = new JButton("3");
 		btnNewButton_3.setRequestFocusEnabled(false);
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_3);
 		
-		JButton btnNewButton_12 = new JButton("*");
+		btnNewButton_12 = new JButton("*");
 		btnNewButton_12.setRequestFocusEnabled(false);
 		btnNewButton_12.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel.add(btnNewButton_12);
 		
-		JButton btnNewButton_4 = new JButton("4");
+		 btnNewButton_4 = new JButton("4");
 		btnNewButton_4.setRequestFocusEnabled(false);
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_4);
 		
-		JButton btnNewButton_5 = new JButton("5");
+		 btnNewButton_5 = new JButton("5");
 		btnNewButton_5.setRequestFocusEnabled(false);
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_5);
 		
-		JButton btnNewButton_6 = new JButton("6");
+		 btnNewButton_6 = new JButton("6");
 		btnNewButton_6.setRequestFocusEnabled(false);
 		btnNewButton_6.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_6);
 		
-		JButton btnNewButton_10 = new JButton("/");
+		 btnNewButton_10 = new JButton("/");
 		btnNewButton_10.setRequestFocusEnabled(false);
 		btnNewButton_10.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel.add(btnNewButton_10);
 		
-		JButton btnNewButton_7 = new JButton("7");
+		btnNewButton_7 = new JButton("7");
 		btnNewButton_7.setRequestFocusEnabled(false);
 		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_7);
 		
-		JButton btnNewButton_8 = new JButton("8");
+		btnNewButton_8 = new JButton("8");
 		btnNewButton_8.setRequestFocusEnabled(false);
 		btnNewButton_8.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_8);
 		
-		JButton btnNewButton_9 = new JButton("9");
+		 btnNewButton_9 = new JButton("9");
 		btnNewButton_9.setRequestFocusEnabled(false);
 		btnNewButton_9.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton_9);
 		
-		JButton btnNewButton_11 = new JButton("+");
+		 btnNewButton_11 = new JButton("+");
 		btnNewButton_11.setRequestFocusEnabled(false);
 		btnNewButton_11.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel.add(btnNewButton_11);
 		
-		JButton btnNewButton_13 = new JButton(".");
+		 btnNewButton_13 = new JButton(".");
 		btnNewButton_13.setRequestFocusEnabled(false);
 		btnNewButton_13.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel.add(btnNewButton_13);
 		
-		JButton btnNewButton = new JButton("0");
+		 btnNewButton = new JButton("0");
 		btnNewButton.setRequestFocusEnabled(false);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel.add(btnNewButton);
 		
-		JButton btnNewButton_14 = new JButton("=");
+		 btnNewButton_14 = new JButton("=");
 		btnNewButton_14.setRequestFocusEnabled(false);
 		btnNewButton_14.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel.add(btnNewButton_14);
 		
-		JButton btnNewButton_15 = new JButton("-");
+		 btnNewButton_15 = new JButton("-");
 		btnNewButton_15.setRequestFocusEnabled(false);
 		btnNewButton_15.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		panel.add(btnNewButton_15);
@@ -180,36 +180,35 @@ private JTextArea txtrSaas;
 	}
 	
 	public void calculator(String calc, double num) {
+		
 		if (doer.equals("+")) {
 			result += num;
 			doer = "";
 		}
-		if (doer.equals("-")) {
+		else if (doer.equals("-")) {
 			result -=num;
 			doer = "";
 		}
-		if (doer.equals("*")) {
+		else if (doer.equals("*")) {
 			result *= num;
 			doer="";
 		}
-		if (doer.equals("/")) {
+		else if (doer.equals("/")) {
 			result /= num;
 			doer="";
 		}
-		if (doer.equals("")) {
-			calculation += calc;
-			if (calculation.equals("")) {
-				tmp = num;
-			}
-			else {
+		else if (tmpDoer.equals("")) {
+			
+			if (!calculation.equals("")){ 
+				
 				calculation += calc;
 				tmp=tmp*10+num;
 				
-				if (tmpDoer.equals("+")) {
+			    if (tmpDoer.equals("+")) {
 					result += tmp;
 				}
 				if (tmpDoer.equals("-")) {
-					result-= tmp;
+						result-= tmp;
 				}
 				if (tmpDoer.equals("*")) {
 					result *= tmp;
@@ -221,9 +220,8 @@ private JTextArea txtrSaas;
 			}
 			
 		}
-		else {
-			calculation += calc;
-		}
+		calculation += calc;
+
 		
 	}
 	
@@ -312,7 +310,7 @@ private JTextArea txtrSaas;
 	else {
 		System.out.print("*");
 	}
-	
+	updateText();
 		}
 		
 	}
