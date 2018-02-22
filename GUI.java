@@ -34,6 +34,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
+import java.util.ArrayList;
+import javax.swing.JToggleButton;
 public class GUI extends JFrame {
 	/**
 	 * @wbp.nonvisual location=73,14
@@ -55,7 +57,7 @@ private JButton btnNewButton_13;
 private JButton btnNewButton_14;
 private JButton btnNewButton_15;
 private String calculation = "";
-double result, tmp;
+double tmp;
 private String doer ="";
 private String tmpDoer = "";
 private String tmp1;
@@ -65,12 +67,13 @@ private JTextArea txtrSaas;
 		getContentPane().setLayout(new BorderLayout(5, 5));
 		
 		 txtrSaas = new JTextArea();
+		 txtrSaas.setColumns(2);
+		 txtrSaas.setFont(new Font("Monospaced", Font.PLAIN, 20));
 		txtrSaas.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-		txtrSaas.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-		txtrSaas.setColumns(3);
+		txtrSaas.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		txtrSaas.setEditable(false);
-		txtrSaas.setRows(1);
-		txtrSaas.setMinimumSize(new Dimension(2, 54));
+		txtrSaas.setRows(2);
+		txtrSaas.setMinimumSize(new Dimension(100, 100));
 		txtrSaas.setPreferredSize(new Dimension(2, 70));
 		txtrSaas.setBorder(new EmptyBorder(4, 4, 4, 4));
 		getContentPane().add(txtrSaas, BorderLayout.NORTH);
@@ -178,77 +181,176 @@ private JTextArea txtrSaas;
 		btnNewButton_15.addActionListener(command);
 		
 	}
-	
-	public void calculator(String calc, double num) {
-		
-		if (doer.equals("+")) {
-			result += num;
-			doer = "";
-		}
-		else if (doer.equals("-")) {
-			result -=num;
-			doer = "";
-		}
-		else if (doer.equals("*")) {
-			result *= num;
-			doer="";
-		}
-		else if (doer.equals("/")) {
-			result /= num;
-			doer="";
-		}
-		else if (tmpDoer.equals("")) {
+	ArrayList<String>whole = new ArrayList<String>();
+	ArrayList<String>result = new ArrayList<String>();
+	boolean is = true;
+	boolean empty = true;
+	boolean multi = false;
+	int size = result.size();
+	double res;
+	public boolean check(int size) {
+		boolean into;
+		if (size!=0) {
+			 into = false;
 			
-			if (!calculation.equals("")){ 
-				
-				calculation += calc;
-				tmp=tmp*10+num;
-				
-			    if (tmpDoer.equals("+")) {
-					result += tmp;
-				}
-				if (tmpDoer.equals("-")) {
-						result-= tmp;
-				}
-				if (tmpDoer.equals("*")) {
-					result *= tmp;
-				}
-				if (tmpDoer.equals("/")) {
-					result /= tmp;
-				}
-				tmpDoer = "";
-			}
-			
-		}
-		calculation += calc;
-
-		
-	}
-	
-	public void Doer(String xx) {
-		
-		int x = calculation.length() - 2;
-		
-		doer = xx;
-		tmpDoer = xx;
-		if (calculation.lastIndexOf("+") != x || calculation.lastIndexOf("-") != x || calculation.lastIndexOf("*") != x || calculation.lastIndexOf("/")!=x) {
-			calculation += " " + xx + " ";
 		}
 		else {
-			String tmp = calculation.substring(x);
-			tmp += " " + xx + " ";
-			calculation = tmp;
-			
+			into = true;
 		}
-		
+		return into;
 	}
 	
-	public void result() {
-		String tmp = Double.toString(result);
-		txtrSaas.append(tmp);
+	
+	public void calculator( double num) {
+		res=tmp;
+		tmp=num;
+		
+		whole.add(Integer.toString((int)tmp));
+	if (!is) {
+			tmp = res*10+num;
+		}
+		is = false;
 	}
+	
+	public void things(String x) {
+		
+		is = true;
+		if(tmp!=0 || tmp == 0 && !check(size) ) {
+		
+		result.add(Double.toString(tmp));
+		tmp = 0;
+		}
+		int tmp;
+		String last;
+		if (result.size()!=0) {
+		 tmp = result.size()-1;
+		 last = result.get(tmp);
+			if(!last.equals("+")&& !last.equals("-") && !last.equals("*") && !last.equals("/") ) {
+				whole.add(x);
+				result.add(x);
+					}
+			else if (last.equals("+")|| last.equals("-") || last.equals("*") || last.equals("/") ) {
+				whole.remove(tmp);
+				whole.add(x);
+			}
+		}
+
+		}
+		
+			
+		
+	
+	
+
+	
+	public void result() {
+		
+		//check if user have inputed last value to calculator and add it to array
+		if(!is) {
+		
+		result.add(Double.toString(tmp));
+		System.out.println("**"+result + "***");
+		}
+		// checks if the array ends with operator and removes it
+		int tmp1 = 0;
+		String last;
+		if (result.size()!=0) {
+		 tmp1 = result.size()-1;
+		 last = result.get(tmp1);
+			if(last.equals("+")|| last.equals("-") || last.equals("*") || last.equals("/") ) {
+				
+				result.remove(tmp1);
+				System.out.print("*/*");
+					}
+		}
+
+		
+
+		System.out.println(result);
+		
+		
+		int kerroin, jako, plus, miinus;
+		
+		do {
+		kerroin = result.indexOf("*");
+		jako = result.indexOf("/");
+		System.out.println(kerroin + " " + jako);
+		//goes through array to find multiplys and diversions
+		if ((kerroin < jako && kerroin !=-1) || (kerroin > jako && jako ==-1)) {
+			System.out.println("kerto");
+		double tmp = Double.parseDouble(result.get(kerroin-1)) * Double.parseDouble(result.get(kerroin+1));
+		// removes old values and add calculated value
+		result.remove(kerroin-1);
+		result.add(kerroin-1, Double.toString(tmp));
+		result.remove(kerroin);
+		result.remove(kerroin);
+		
+		}
+		else if((jako < kerroin && jako !=-1) || (jako >kerroin && kerroin ==-1)) {
+			System.out.println("jako");
+			double tmp = Double.parseDouble(result.get(jako-1)) / Double.parseDouble(result.get(jako+1));
+			result.remove(jako-1);
+			result.add(jako-1, Double.toString(tmp));
+			result.remove(jako);
+			result.remove(jako);
+			
+		}
+		} while (kerroin != -1 || jako != -1);
+
+		do {
+			plus = result.indexOf("+");
+			miinus = result.indexOf("-");
+		System.out.println(plus + " " +miinus);
+		
+		if ((plus < miinus && plus != -1) ||( plus > miinus && miinus == -1)) {
+			System.out.println("plus");
+		double tmp = Double.parseDouble(result.get(plus-1)) + Double.parseDouble(result.get(plus+1));
+		result.remove(plus-1);
+		result.add(plus-1, Double.toString(tmp));
+		result.remove(plus);
+		result.remove(plus);
+		
+		
+		}
+		else if ((miinus<jako && miinus !=-1) || (miinus > plus && plus == -1)) {
+			System.out.println("miinus");
+			double tmp = Double.parseDouble(result.get(miinus-1)) - Double.parseDouble(result.get(miinus+1));
+			result.remove(miinus-1);
+			result.add(miinus-1, Double.toString(tmp));
+			result.remove(miinus);
+			result.remove(miinus);
+			
+		}
+		System.out.println(result.indexOf("+"));
+		} while (plus > -1 || miinus > -1 );
+		
+		// Array to memorize answers
+		int y = 0;
+		ArrayList<String> results = new ArrayList<String>();
+		results.add(result.get(0));
+		
+		System.out.println(result);
+// checks if outcome contais somenthing afte dot.
+		double d = Double.parseDouble(results.get(y));
+		if (d%1 == 0) {
+		txtrSaas.setText(Integer.toString((int)d));
+		}
+		else {
+			txtrSaas.setText(results.get(y));
+		}
+		y++;
+		//reset variable so program can continue calculating from result
+		tmp = 0;
+	}
+		
 	public void updateText() {
-		txtrSaas.append(calculation);
+		String txt="";
+		for (int x = 0; x < whole.size(); x++) {
+		txt = txt  + whole.get(x);
+	
+		
+	}
+		txtrSaas.setText(txt);
 	}
 	
 	private class MyEventHandler implements ActionListener {
@@ -258,59 +360,72 @@ private JTextArea txtrSaas;
 			
 		
 	if (event.getSource()==btnNewButton) {
-		calculator("0", 0);
+		calculator(0);
 		
 	}
 	else if (event.getSource()==btnNewButton_1) {
-		calculator("1", 1);	
-		
+		calculator(1);	
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_2) {
-		calculator("2", 2);
+		calculator(2);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_3) {
-		calculator("3", 3);
+		calculator(3);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_4) {
-		calculator("4", 4);
+		calculator(4);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_5) {
-		calculator("5", 5);
+		calculator(5);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_6) {
-		calculator("6", 6);
+		calculator(6);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_7) {
-		calculator("7", 7);
+		calculator(7);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_8) {
-		calculator("8", 8);
+		calculator(8);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_9) {
-		calculator("9", 9);
+		calculator( 9);
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_10) {
-		Doer("/");
+		things("/");
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_11) {
-		Doer("+");
+		things("+");
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_12) {
-		Doer("*");
+		things("*");
+		updateText();
 	}
 	else if (event.getSource()==btnNewButton_13) {
 		
 	}
 	else if (event.getSource()==btnNewButton_14) {
 		result();
+		
 	}
 	else if (event.getSource()==btnNewButton_15) {
-		Doer("-");
+		things("-");
+		updateText();
 	}
 	else {
 		System.out.print("*");
 	}
-	updateText();
+	
 		}
 		
 	}
@@ -318,7 +433,9 @@ private JTextArea txtrSaas;
 
 public static void main(String[] args) {
 	GUI frame = new GUI();
+	frame.setSize(400, 500);
+	frame.setLocationRelativeTo(null);
 	frame.setVisible(true);
-	
+
 }
 }
